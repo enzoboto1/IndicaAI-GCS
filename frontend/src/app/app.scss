@@ -1,0 +1,31 @@
+.navbar {
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,.1);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 56px;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #1f2937;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  transition: color 0.2s;
+  &:hover, &.active { color: #3b82f6; }
+}
+
+.page h2 { font-size: 1.5rem; margin-bottom: 20px; }
