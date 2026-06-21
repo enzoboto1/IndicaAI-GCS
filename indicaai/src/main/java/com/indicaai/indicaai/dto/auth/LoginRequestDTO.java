@@ -1,9 +1,12 @@
 package com.indicaai.indicaai.dto.auth;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
-public record LoginRequestDTO(
-        @Email String email,
-        @NotBlank String senha
-) {}
+public class LoginRequestDTO {
+    @Email private String email;
+    @NotBlank private String senha;
+    public LoginRequestDTO() {}
+    public String getEmail() { return email; }
+    public String getSenha() { return senha; }
+}

@@ -1,13 +1,10 @@
 package com.indicaai.indicaai.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "opportunities")
+@Table(name = "vagas")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,36 +19,18 @@ public class Opportunity {
     @Column(nullable = false, length = 150)
     private String titulo;
 
-    @Column(nullable = false, length = 1000)
-    private String descricao;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private OpportunityType tipo;
-
     @Column(nullable = false, length = 150)
     private String empresa;
 
-    @Column(nullable = false, length = 100)
-    private String area;
+    @Column(nullable = false, length = 1000)
+    private String descricao;
 
-    @Column(nullable = false, length = 100)
-    private String localizacao;
+    @Column(nullable = false, length = 500)
+    private String requisitos;
 
-    private BigDecimal remuneracao;
+    @Column(nullable = false, length = 50)
+    private String modalidade;
 
-    @Column(nullable = false, length = 150)
-    private String contato;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User usuario;
-
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
+    @Column(nullable = false, length = 50)
+    private String nivel;
 }

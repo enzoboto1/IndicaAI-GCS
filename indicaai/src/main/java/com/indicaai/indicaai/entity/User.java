@@ -1,12 +1,11 @@
 package com.indicaai.indicaai.entity;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "users")
+@Table(name = "alunos")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,20 +23,24 @@ public class User {
     @Column(nullable = false, unique = true, length = 150)
     private String email;
 
-    @Column(nullable = false)
-    private String senha;
-
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String curso;
 
-    @Column(nullable = false)
     private Integer semestre;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(length = 500)
+    private String habilidades;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
+    @Column(length = 200)
+    private String github;
+
+    @Column(length = 200)
+    private String linkedin;
+
+    @Column(length = 200)
+    private String portfolio;
+
+    @JsonIgnore
+    @Column(length = 200)
+    private String senha;
 }
