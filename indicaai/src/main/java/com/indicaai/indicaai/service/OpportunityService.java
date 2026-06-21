@@ -1,12 +1,7 @@
 package com.indicaai.indicaai.service;
 
-import com.indicaai.indicaai.dto.opportunity.OpportunityRequestDTO;
-import com.indicaai.indicaai.dto.opportunity.OpportunityResponseDTO;
 import com.indicaai.indicaai.entity.Opportunity;
-import com.indicaai.indicaai.entity.OpportunityType;
-import com.indicaai.indicaai.entity.User;
 import com.indicaai.indicaai.repository.OpportunityRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,51 +13,31 @@ public class OpportunityService {
 
     private final OpportunityRepository repository;
 
-    public OpportunityResponseDTO create(OpportunityRequestDTO dto, User user) {
-        Opportunity opportunity = Opportunity.builder()
-                .titulo(dto.titulo())
-                .descricao(dto.descricao())
-                .tipo(dto.tipo())
-                .empresa(dto.empresa())
-                .area(dto.area())
-                .localizacao(dto.localizacao())
-                .remuneracao(dto.remuneracao())
-                .contato(dto.contato())
-                .usuario(user)
-                .build();
-
-        return mapToResponse(repository.save(opportunity));
+    public List<Opportunity> listarTodas() {
+        return repository.findAll();
     }
 
-    public List<OpportunityResponseDTO> listAll() {
-        return repository.findAll().stream()
-                .map(this::mapToResponse)
-                .toList();
+    public Opportunity buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vaga não encontrada"));
     }
 
-    public List<OpportunityResponseDTO> search(
-            String title,
-            String area,
-            OpportunityType tipo) {
-
-        return repository.search(title, area, tipo)
-                .stream()
-                .map(this::mapToResponse)
-                .toList();
+    public Opportunity salvar(Opportunity vaga) {
+        return repository.save(vaga);
     }
 
-    private OpportunityResponseDTO mapToResponse(Opportunity o) {
-        return new OpportunityResponseDTO(
-                o.getId(),
-                o.getTitulo(),
-                o.getDescricao(),
-                o.getTipo(),
-                o.getEmpresa(),
-                o.getArea(),
-                o.getLocalizacao(),
-                o.getRemuneracao(),
-                o.getContato(),
-                o.getUsuario().getNome()
-        );
+    public Opportunity atualizar(Long id, Opportunity vaga) {
+        Opportunity existente = buscarPorId(id);
+        existente.setTitulo(vaga.getTitulo());
+        existente.setEmpresa(vaga.getEmpresa());
+        existente.setDescricao(vaga.getDescricao());
+        existente.setRequisitos(vaga.getRequisitos());
+        existente.setModalidade(vaga.getModalidade());
+        existente.setNivel(vaga.getNivel());
+        return repository.save(existente);
+    }
+
+    public void deletar(Long id) {
+        repository.deleteById(id);
     }
 }
